@@ -50,8 +50,10 @@ public class AluPorMateVista extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jbSalir = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jlFondo = new javax.swing.JLabel();
 
+        setTitle("Lista de alumnos por Materia");
         setPreferredSize(new java.awt.Dimension(530, 400));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -60,7 +62,7 @@ public class AluPorMateVista extends javax.swing.JInternalFrame {
                 jcbSAActionPerformed(evt);
             }
         });
-        getContentPane().add(jcbSA, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 230, 30));
+        getContentPane().add(jcbSA, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 230, 30));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -75,8 +77,11 @@ public class AluPorMateVista extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, 240));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, 150));
 
+        jbSalir.setBackground(new java.awt.Color(0, 0, 153));
+        jbSalir.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        jbSalir.setForeground(new java.awt.Color(255, 255, 255));
         jbSalir.setText("Salir");
         jbSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,6 +89,11 @@ public class AluPorMateVista extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(jbSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(423, 10, 80, -1));
+
+        jLabel1.setFont(new java.awt.Font("Roboto", 1, 20)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Listado de Alumnos inscriptos por Materia");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 390, 50));
 
         jlFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/gradient_2.jpg"))); // NOI18N
         jlFondo.setPreferredSize(new java.awt.Dimension(5300, 4000));
@@ -105,6 +115,7 @@ public class AluPorMateVista extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jbSalir;

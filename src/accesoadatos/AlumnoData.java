@@ -49,32 +49,38 @@ public class AlumnoData {
     }
 
     public void modificarAlumno(Alumno alumno) {
-        String sql = "UPDATE alumno SET dni = ?, apellido=?, nombre=?, fechaNac=? "
-                + "WHERE idAlumno = ?";
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, alumno.getDni());
-            ps.setString(2, alumno.getApellido());
-            ps.setString(3, alumno.getNombre());
-            ps.setDate(4, Date.valueOf(alumno.getFechaNac()));
-            ps.setInt(5, alumno.getIdAlumno());
-            int exito = ps.executeUpdate();
-            if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Alumno modificado con exito");
-            }
-            ps.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "2Error al acceder a la tabla alumno" + ex.getMessage());
-        }
-    }
+            String sql = "UPDATE alumno SET dni = ?, apellido=?, nombre=?, fechaNac=? "
+                    + "WHERE idAlumno = ?";
+            try {
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setInt(1, alumno.getDni());
+                ps.setString(2, alumno.getApellido());
+                ps.setString(3, alumno.getNombre());
+                ps.setDate(4, Date.valueOf(alumno.getFechaNac()));
+                ps.setInt(5, alumno.getIdAlumno());
+                int exito = ps.executeUpdate();
+                if (exito == 1) {
+                    JOptionPane.showMessageDialog(null, "Alumno modificado con exito");
+                }
+                ps.close();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "2Error al acceder a la tabla alumno. " + ex.getMessage());
+            } catch (NullPointerException e) {
 
+            }
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "Error al completar los campos. " + e.getMessage());
+        }
+
+    }
+    
     public void eliminarAlumno(int idAlumno) {
 
         try {
             String sql = "UPDATE alumno "
                     + "SET estado = 0 "
                     + "WHERE idAlumno = ? ";
-
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idAlumno);
             int fila = ps.executeUpdate();
@@ -84,7 +90,7 @@ public class AlumnoData {
             }
             ps.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Alumno" + e);
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Alumno. " + e);
         }
     }
 
@@ -139,7 +145,7 @@ public class AlumnoData {
             }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Alumno" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Alumno. " + ex.getMessage());
 
         }
         return al;

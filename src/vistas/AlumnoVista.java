@@ -16,13 +16,19 @@ import javax.swing.JOptionPane;
  * @author Veronica
  */
 public class AlumnoVista extends javax.swing.JInternalFrame {
-        AlumnoData ad =new AlumnoData();
-        Alumno alumnoBuscado;
-        Alumno alumnoEncontrado;
+        private AlumnoData ad =new AlumnoData();
+        private Alumno alumnoBuscado;
+        private Alumno alumnoEncontrado;
+       
+               // JDateChooser dateChooser = new JDateChooser();
+//dateChooser.setDate(new Date()); // Esto establece la fecha actual en el JDateChooser
+
 
     public AlumnoVista() {
         initComponents();
         limpiarFormulario();
+
+
         
     }
 
@@ -179,11 +185,6 @@ public class AlumnoVista extends javax.swing.JInternalFrame {
 
             if (alumnoBuscado != null) {                //se encontró el alumno en la BD
                 alumnoEncontrado = alumnoBuscado;
-
-                jbEliminar.setEnabled(true);
-                jbGuardar.setEnabled(false);  //esta de más????? porque inicié en el constructor como false???? ver
-                jbModificar.setEnabled(true);
-
                 habilitarLlenadoDeCampos();
 
                 jtfApellido.setText(alumnoEncontrado.getApellido());
@@ -192,6 +193,8 @@ public class AlumnoVista extends javax.swing.JInternalFrame {
 
                 if (alumnoEncontrado.isActivo() == true) {
                     jlEstado.setText("Alumno   Activo");
+                    jbModificar.setEnabled(true);
+                    jbEliminar.setEnabled(true);
                 } else {
                     jlEstado.setText("Alumno   Inactivo");
                 }
@@ -222,9 +225,21 @@ public class AlumnoVista extends javax.swing.JInternalFrame {
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         int dni = Integer.parseInt(jtfDNI.getText());
-
-        String apellido = jtfApellido.getText();
-        String nombre = jtfNombre.getText();
+        String apellido = null;
+        String nombre = null;
+        
+        if(jtfApellido.getText()!=null&&jtfNombre!=null){
+        apellido = jtfApellido.getText();
+        nombre = jtfNombre.getText();
+        }else{
+            JOptionPane.showMessageDialog(this, "Los campos no pueden estar vacíos.");
+            limpiarFormulario();
+        }
+        
+        if(jDateChooser1.getDate()==null){
+           jDateChooser1.getMinSelectableDate();
+        }
+        
         SimpleDateFormat formatoFecha =new SimpleDateFormat("dd-MM-yyyy");
         String fecha = formatoFecha.format(jDateChooser1.getDate());
         LocalDate fn =LocalDate.parse(fecha, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
@@ -255,7 +270,7 @@ public class AlumnoVista extends javax.swing.JInternalFrame {
 
         try {
             int dniBuscado = Integer.parseInt(jtfDNI.getText());    //
-            alumnoBuscado = ad.buscarAlumnoPorDNI(dniBuscado);
+            alumnoBuscado = ad.buscarAlumnoPorDNI(dniBuscado);   //busca solo activos
             if (alumnoBuscado != null) {
                 alumnoEncontrado = alumnoBuscado;
 
@@ -274,14 +289,17 @@ public class AlumnoVista extends javax.swing.JInternalFrame {
                 limpiarFormulario();
                 inhabilitarLlenadoDeCampos();
             } else {
+                
                 limpiarFormulario();
                 inhabilitarLlenadoDeCampos();
 
             }
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "El DNI solo debe contener números.");
+            JOptionPane.showMessageDialog(this, "El DNI solo debe contener números. "+ ex.getMessage());
         } catch (NullPointerException ex) {
-            JOptionPane.showMessageDialog(this, "Todos los campos deben estar completos " + ex);
+            JOptionPane.showMessageDialog(this, "Todos los campos deben estar completos. " + ex.getMessage());
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Error al completar los campos. " + e.getMessage());
         }
     }//GEN-LAST:event_jbModificarActionPerformed
 
